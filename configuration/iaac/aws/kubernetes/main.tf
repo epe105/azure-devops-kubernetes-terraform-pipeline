@@ -34,29 +34,37 @@ provider "kubernetes" {
 module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "in28minutes-cluster"
-  cluster_version = "1.14"
-  subnets         = ["subnet-f06becfc", "	subnet-efdc0aa7"] #CHANGE
+  cluster_version = "1.23"
+  subnet_ids         = ["subnet-f06becfc", "	subnet-efdc0aa7"]
   #subnets = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
 
   #vpc_id         = "vpc-0d7b7290df82bc3d5"
 
-  node_groups = [
-    {
-      instance_type = "t2.micro"
-      max_capacity  = 5
-      desired_capacity = 3
-      min_capacity  = 3
+# EKS Managed Node Group(s)
+  eks_managed_node_group_defaults = {
+    instance_types = ["t2.small", "t2.medium"]
+  }
+
+  eks_managed_node_groups = {
+    blue = {}
+    green = {
+      min_size     = 1
+      max_size     = 10
+      desired_size = 1
+
+      instance_types = ["t2.medium"]
     }
-  ]
+  }
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
-}
+//>>Uncomment this section once EKS is created - Start
+ data "aws_eks_cluster" "cluster" {
+   name = "in28minutes-cluster" #module.in28minutes-cluster.cluster_name
+ }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
+  name = "in28minutes-cluster" #module.in28minutes-cluster.cluster_name
 }
 
 
@@ -78,6 +86,7 @@ resource "kubernetes_cluster_role_binding" "example" {
     namespace = "default"
   }
 }
+//>>Uncomment this section once EKS is created - End
 
 # Needed to set the default region
 provider "aws" {
