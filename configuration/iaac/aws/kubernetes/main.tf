@@ -20,7 +20,7 @@ resource "aws_default_vpc" "default" {
 data "aws_subnets" "subnets" {
   filter {
     name = "vpc_id"
-    values = "vpc-3f5a5a59"
+    values = [vpc-3f5a5a59]
   }
 }
 
