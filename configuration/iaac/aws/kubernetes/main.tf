@@ -18,10 +18,10 @@ resource "aws_default_vpc" "default" {
 }
 
 data "aws_subnets" "subnets" {
-  filter {
-    name = "vpc_id"
-    values = [var.vpc_id]
-  }
+#  filter {
+#    name = "vpc_id"
+#    values = [var.vpc_id]
+#  }
 }
 
 provider "kubernetes" {
