@@ -7,21 +7,21 @@
 
 terraform {
   backend "s3" {
-    bucket = "terraform-backend-state-manny703" # Will be overridden from build
+    bucket = "terraform-backend-state-manny" # Will be overridden from build
     key    = "path/to/my/key" # Will be overridden from build
     region = "us-east-1"
   }
 }
 
-#resource "aws_default_vpc" "default" {
-resource "mann-vpc" "default" {
+resource "aws_default_vpc" "default" {
+#resource "manny-vpc" "default" {
 
 
 }
 
 data "aws_subnet_ids" "subnets" {
-  #vpc_id = aws_default_vpc.default.id
-  vpc_id = vpc-0d7b7290df82bc3d5
+  vpc_id = aws_default_vpc.default.id
+  #vpc_id = vpc-0d7b7290df82bc3d5
 }
 
 provider "kubernetes" {
@@ -35,11 +35,11 @@ module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "in28minutes-cluster"
   cluster_version = "1.14"
-  subnets         = ["subnet-013eda54a78e0115e", "subnet-057cd2aee058e4e00"] #CHANGE
+  subnets         = ["subnet-f06becfc", "	subnet-efdc0aa7"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
-  #vpc_id          = aws_default_vpc.default.id
+  vpc_id          = aws_default_vpc.default.id
 
-  vpc_id         = "vpc-0d7b7290df82bc3d5"
+  #vpc_id         = "vpc-0d7b7290df82bc3d5"
 
   node_groups = [
     {
