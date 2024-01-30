@@ -59,6 +59,7 @@ module "in28minutes-cluster" {
 }
 
 //>>Uncomment this section once EKS is created - Start
+/*
  data "aws_eks_cluster" "cluster" {
    name = "in28minutes-cluster" #module.in28minutes-cluster.cluster_name
  }
@@ -86,6 +87,7 @@ resource "kubernetes_cluster_role_binding" "example" {
     namespace = "default"
   }
 }
+*/
 //>>Uncomment this section once EKS is created - End
 
 # Needed to set the default region
