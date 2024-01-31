@@ -7,11 +7,15 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+
 - script: curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
   displayName: 'Install eksctl'
+
 - script: sudo mv /tmp/eksctl /usr/local/bin
   displayName: 'mv eksctl to local bin'
 
+- script: eksctl version
+  displayName: 'check eksctl version'
 # - task: TerraformTaskV4@4
 #   inputs:
 #     provider: 'aws'
