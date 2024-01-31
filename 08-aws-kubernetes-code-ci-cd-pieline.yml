@@ -32,7 +32,6 @@ stages:
         ArtifactName: 'manifests'
         publishLocation: 'Container'
 
-stages:
 - stage: Deploy
   displayName: Deploy image
   jobs:
