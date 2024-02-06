@@ -25,7 +25,7 @@ stages:
       displayName: Build and Push Image
       inputs:
         containerRegistry: 'docker-hub'
-        repository: 'in28min/currency-exchange-devops'
+        repository: 'mannyevangelista/currency-exchange-devops'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
@@ -60,7 +60,7 @@ stages:
         kubernetesServiceConnection: 'aws-eks-cluster'
         namespace: 'default'
         manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
-        containers: 'in28min/currency-exchange-devops:$(tag)'
+        containers: 'mannyevangelista/currency-exchange-devops:$(tag)'
 # Build 
 # Build Docker
 # Push Docker => 100
